@@ -6,6 +6,6 @@ return [
     'max_clients' => 5,
     'timeout' => 30,
     'admin_ip' => '127.0.0.1',
-    'log_file' => __DIR__ . '/.../logs.txt',
-    'upload_file' => __DIR__ . '/shared/files/'
+    'log_file' => __DIR__ . '/../logs.txt',
+    'upload_file' => __DIR__ . '/../shared/files/'
 ];
