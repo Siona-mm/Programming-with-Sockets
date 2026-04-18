@@ -1,9 +1,11 @@
 # UDP Programimi me Sockets
+
 ## Përshkrimi i Projektit
-Ky projekt implementon një sistem komunikimi nëpërmjet soketave UDP në PHP. Serveri menaxhon kërkesat e klientëve për operacione me skedarë, duke diferencuar midis klientëve Admin dhe klientëve Standard.
+Ky projekt implementon një sistem komunikimi nëpërmjet soketave UDP në PHP. Serveri menaxhon kërkesat e klientëve për operacione me skedarë, duke diferencuar midis klientëve Admin dhe klientëve Standard.  
 Përveç serverit kryesor UDP, është implementuar edhe një HTTP Server i thjeshtë që funksionon paralelisht për monitorimin e statistikave të serverit.
 
 ## Veçoritë Kryesore
+
 ### Server
 - UDP Server në portin `9090`
 - Limit i lidhjeve (maksimum 4 klientë njëkohësisht)
@@ -25,52 +27,67 @@ Përveç serverit kryesor UDP, është implementuar edhe një HTTP Server i thje
 ```
 PROGRAMMING-WITH-SOCKETS/
 ├── client/
-│ ├── admin_client.php
-│ └── udp_client.php
+│   ├── admin_client.php
+│   └── udp_client.php
 ├── server/
-│ ├── client_manager.php
-│ ├── config.php
-│ ├── file_manager.php
-│ ├── http_server.php
-│ ├── request_handler.php
-│ ├── udp_server.php
-│ └── logs.txt
+│   ├── client_manager.php
+│   ├── config.php
+│   ├── file_manager.php
+│   ├── http_server.php
+│   ├── request_handler.php
+│   ├── udp_server.php
+│   └── logs.txt
 ├── shared/
-│ └── files/
-│ └── .gitkeep
+│   └── files/
+│       └── .gitkeep
 └── README.md
 ```
 
 ---
 ## Si të ekzekutohet programi
 
-**Shënim e rëndësishme:** Sepse sockets extension nuk është aktivizuar në PHP, duhet të përdorni `-d extension=sockets` çdo herë.
+**Shënim i rëndësishëm:** Sepse `sockets` extension nuk është aktivizuar në PHP-në tuaj, duhet të përdorni `-d extension=sockets` çdo herë.
 
-Hapen 3 terminale të ndryshme:
+Hapni **3 terminale** të ndryshme dhe përdorni një nga dy mënyrat më poshtë:
 
-### 1. Nis UDP Serverin (Terminal 1)
+### Mënyra 1: Duke qenë brenda folderit (Rekomanduar)
+
 ```bash
+# Terminal 1 – UDP Server
+cd server
+php -d extension=sockets udp_server.php
+
+# Terminal 2 – HTTP Monitor Server
+cd server
+php -d extension=sockets http_server.php
+
+# Terminal 3 – Admin Client
+cd client
+php -d extension=sockets admin_client.php
+```
+
+### Mënyra 2: Nga rrënja e projektit
+
+```bash
+# Terminal 1 – UDP Server
 php -d extension=sockets server/udp_server.php
-```
 
-### 2. Nis HTTP Monitor Serverin (Terminal 2)
-```bash
+# Terminal 2 – HTTP Monitor Server
 php -d extension=sockets server/http_server.php
-```
 
-### 3. Lidhu si Admin (Terminal 3)
-```bash
+# Terminal 3 – Admin Client
 php -d extension=sockets client/admin_client.php
 ```
 
-### Opsional – Lidhu si Klient Standard
+**Opsional – Standard Client**
 ```bash
 php -d extension=sockets client/udp_client.php
 ```
 
-Varësisht nga numri i klientëve që dëshiron ti testosh, hap aq terminale.
+Varësisht nga numri i klientëve që dëshironi të testoni, hapni aq terminale sa nevojiten.
 
 ## Komandat
+
 ### Admin Client
 - `/list`
 - `/read <filename>`
@@ -83,4 +100,3 @@ Varësisht nga numri i klientëve që dëshiron ti testosh, hap aq terminale.
 - `/read <filename>`
 - `/search <keyword>`
 - `/info <filename>`
-```
