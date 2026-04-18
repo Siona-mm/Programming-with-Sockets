@@ -10,6 +10,7 @@ class ClientManager {
         $currentTime = time();
         $timeout = 60;
 
+        // Remove inactive clients (timeout)
         foreach (self::$active_clients as $id => $lastActiveTime) {
             if (($currentTime - $lastActiveTime) > $timeout) {
                 unset(self::$active_clients[$id]);
@@ -39,6 +40,9 @@ class ClientManager {
 
         array_unshift(self::$history, $entry);
 
-        file_put_contents(__DIR__ . '/../logs.txt', "[" . date('H:i:s') . "] $ip:$port -> $message" . PHP_EOL, FILE_APPEND);
+       
+        file_put_contents(__DIR__ . '/logs.txt', 
+            "[" . date('H:i:s') . "] $ip:$port -> $message" . PHP_EOL, 
+            FILE_APPEND);
     }
 }
