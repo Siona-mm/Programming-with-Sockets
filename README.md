@@ -50,7 +50,7 @@ PROGRAMMING-WITH-SOCKETS/
 
 Hapni **3 terminale** të ndryshme dhe përdorni një nga dy mënyrat më poshtë:
 
-### Mënyra 1: Duke qenë brenda folderit (Rekomanduar)
+### Mënyra 1: Duke qenë brenda folderit
 
 ```bash
 # Terminal 1 – UDP Server
