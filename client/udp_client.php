@@ -1,25 +1,26 @@
 <?php
-
-$host = '127.0.0.1'; 
-$port = 9090;      
+require_once __DIR__ . '/../server/config.php';
 
 $socket = socket_create(AF_INET, SOCK_DGRAM, SOL_UDP);
 
-echo "--- UDP STANDARD CLIENT (Read Only) ---\n";
-echo "Mund te perdorni: /list, /read, /search, /info\n";
-echo "Shenim: Ju nuk keni privilegje per /upload ose /delete\n\n";
+echo "--- UDP CLIENT ---\n";
+echo "Komandat: /list, /read, /upload, /download, /delete, /search, /info\n";
+echo "Shkruaj 'quit' ose 'exit' për të dalë.\n\n";
 
 while (true) {
-    $message = readline("Pyetje per serverin: ");
+    $msg = readline("Shkruaj komanden: ");
     
-    if (empty($message)) continue;
-    if ($message == "exit") break;
-
-    socket_sendto($socket, $message, strlen($message), 0, $host, $port);
-
-    socket_recvfrom($socket, $response, 2048, 0, $from_ip, $from_port);
+    if (strtolower(trim($msg)) === "quit" || strtolower(trim($msg)) === "exit") {
+        break;
+    }
     
-    echo "Serveri: " . $response . "\n------------------------\n";
+    if (empty(trim($msg))) continue;
+
+    socket_sendto($socket, $msg, strlen($msg), 0, SERVER_IP, UDP_PORT);
+
+    socket_recvfrom($socket, $reply, 4096, 0, $from_ip, $from_port);
+    echo "Serveri ktheu: " . $reply . "\n\n";
 }
 
 socket_close($socket);
+echo "Klienti u mbyll me sukses.\n";
