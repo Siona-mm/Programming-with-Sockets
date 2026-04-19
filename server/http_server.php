@@ -6,7 +6,6 @@ require_once 'client_manager.php';
 $http_socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
 socket_set_option($http_socket, SOL_SOCKET, SO_REUSEADDR, 1);
 
-
 if (!@socket_bind($http_socket, SERVER_IP, HTTP_PORT)) {
     die("GABIM: Porti " . HTTP_PORT . " eshte i zene ose i bllokuar. Ndrysho portin te config.php.\n");
 }
@@ -22,8 +21,7 @@ while (true) {
     $request = socket_read($client, 2048);
 
     if (strpos($request, 'GET /stats') !== false) {
-       
-        $stats = ClientManager::$history; 
+        $stats = ClientManager::getStats(); 
         $body = json_encode($stats, JSON_PRETTY_PRINT);
         
         $response = "HTTP/1.1 200 OK\r\n";
